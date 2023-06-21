@@ -16,3 +16,5 @@ export class Comment {
   @ManyToOne(() => Topic, (topic) => topic.comments)
   topic: Topic;
 }
+
+// TODO: Write the logic for the remaining componenets: TOpic, user, etc

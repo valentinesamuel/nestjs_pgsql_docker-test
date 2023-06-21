@@ -1,26 +1,64 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { InjectRepository } from '@nestjs/typeorm';
+import { User } from './entities/user.entity';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class UserService {
-  create(createUserDto: CreateUserDto) {
-    return 'This action adds a new user';
+  constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
+  createUser(createUserDto: CreateUserDto) {
+    try {
+      const newUser = this.userRepo.save(createUserDto);
+      return newUser;
+    } catch (error) {
+      throw new BadRequestException();
+    }
   }
 
-  findAll() {
-    return `This action returns all user`;
+  findAllUsers() {
+    try {
+      const users = this.userRepo.find();
+      return users;
+    } catch (error) {
+      throw new NotFoundException(error);
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOneUser(id: string) {
+    try {
+      const user = this.userRepo.findOne({
+        where: {
+          id: id,
+        },
+      });
+      return user;
+    } catch (error) {
+      throw new NotFoundException(error);
+    }
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  updateUser(id: string, updateUserDto: UpdateUserDto) {
+    try {
+      const updatedUser = this.userRepo.update(id, updateUserDto);
+      return updatedUser;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  removeUser(id: string) {
+    try {
+      const deletedUser = this.findOneUser(id);
+      this.userRepo.delete(id);
+      return deletedUser;
+    } catch (error) {
+      throw new BadRequestException(error);
+    }
   }
 }

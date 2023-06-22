@@ -13,5 +13,5 @@ export class CreateUserDto {
 
   @IsOptional()
   @IsArray()
-  comments?: Comment[];
+  comments: Comment[];
 }

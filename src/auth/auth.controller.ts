@@ -13,7 +13,11 @@ import { AuthService } from './auth.service';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { AuthGuard } from './auth.guard';
+import { Request } from 'express';
 
+interface UserRequest extends Request {
+  user?: any;
+}
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
@@ -25,10 +29,10 @@ export class AuthController {
   }
 
   @UseGuards(AuthGuard)
-  @Get('profile')
-  getProfile(@Req() req: Request) {
-    console.log(req);
-    return;
+  @Get('user')
+  getUser(@Req() req: UserRequest) {
+    console.log(req.user);
+    return req.user;
   }
 
   @Post()

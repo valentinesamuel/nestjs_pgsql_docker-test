@@ -17,4 +17,4 @@ export class Comment {
   topic: Topic;
 }
 
-// TODO: Write the logic for the remaining componenets: TOpic, user, etc
+// TODO: Write the logic for the remaining componenets: user, etc

@@ -36,6 +36,9 @@ export class UserService {
         where: {
           id: id,
         },
+        relations: {
+          comments: true,
+        },
       });
       return user;
     } catch (error) {

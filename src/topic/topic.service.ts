@@ -38,6 +38,9 @@ export class TopicService {
         where: {
           id: id,
         },
+        relations: {
+          comments: true,
+        },
       });
       return topic;
     } catch (error) {

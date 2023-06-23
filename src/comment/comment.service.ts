@@ -38,6 +38,10 @@ export class CommentService {
         where: {
           id: id,
         },
+        relations: {
+          user: true,
+          topic: true,
+        },
       });
       return comment;
     } catch (error) {

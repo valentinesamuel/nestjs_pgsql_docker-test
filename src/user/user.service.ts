@@ -12,12 +12,12 @@ import { Repository } from 'typeorm';
 @Injectable()
 export class UserService {
   constructor(@InjectRepository(User) private userRepo: Repository<User>) {}
-  createUser(createUserDto: CreateUserDto) {
+  async createUser(createUserDto: CreateUserDto) {
     try {
-      const newUser = this.userRepo.save(createUserDto);
-      return newUser;
+      const newUser = this.userRepo.create(createUserDto);
+      return await this.userRepo.save(newUser);
     } catch (error) {
-      throw new BadRequestException();
+      throw new BadRequestException(error);
     }
   }
 

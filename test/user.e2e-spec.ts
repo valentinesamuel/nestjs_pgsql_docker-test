@@ -75,7 +75,7 @@ describe('UserController (e2e)', () => {
     return request(app.getHttpServer())
       .post('/user')
       .send({
-        name: 2,
+        name: 5,
       })
       .expect(400, {
         statusCode: 400,
